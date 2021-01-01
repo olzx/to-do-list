@@ -7,9 +7,12 @@ body {
     background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
 }
 
+.main {
+    padding-top: 50px;
+}
+
 .center {
     margin: 0 auto;
-    margin-top: 50px;
     width: 800px;
     min-height: 300px;
     background-color: rgba(57,62,70, .8);
