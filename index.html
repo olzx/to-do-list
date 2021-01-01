@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список дел</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <main>
+        <div class="center">
+            <div class="container">
+                <h1 class="title">Простой список дел на <span>{ JavaScript }</span></h1>
+                <div class="input">
+                    <div class="input__container">
+                        <div class="input__main">
+                            <input id="inputTextTask" type="text">
+                            <span id="buttonClearTextTask" class="input__clear" title="Очистить поле ввода"></span>
+                        </div>
+                        <input id="buttonAddTask" type="submit" value="Добавить">
+                    </div>
+                </div>
+                <div class="tools">
+                    <div class="tools__container">
+                        <div id="buttonRemoveAllTasks" class="tools__button">
+                            <object class="tools__item-icon" type="image/svg+xml" data="svg/delete.svg"></object>
+                            <span class="tools__item-text">Удалить всё</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="listToDo" class="list">
+                    <!-- ToDo -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/app.js"></script>
+</body>
+</html>
