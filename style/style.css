@@ -295,7 +295,6 @@ body {
 
 .list__ico_edit {
     background-image: url(../svg/edit.svg);
-<<<<<<< HEAD
 }
 
 .text-completed {
@@ -306,6 +305,4 @@ body {
 
 .dragging {
     opacity: .5;
-=======
->>>>>>> 79c4e05b12c2d3668a5af98427a792553e473aef
 }
