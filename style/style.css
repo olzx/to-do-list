@@ -298,3 +298,8 @@ body {
     text-decoration: line-through;
     opacity: .5;
 }
+
+
+.dragging {
+    opacity: .5;
+}

@@ -21,18 +21,20 @@ loadLocalStorageAllToDos()
 
 function createNewTask(text, data = null) {
     let listContainer = document.createElement('div')
-    listContainer.className = 'list__container'
+    listContainer.className = 'list__container draggable'
+    listContainer.draggable = true
 
     const {dayMonth, month, year, hourse, minutes} = getTime()
 
     const toDo = {
-        time: {
-            dayMonth: data ? data.time.dayMonth : dayMonth,
-            month: data ? data.time.month : month,
-            year: data ? data.time.year : year,
-            hourse: data ? data.time.hourse : hourse,
-            minutes: data ? data.time.minutes : minutes
-        },
+        time: `${data ? (data.time) : `${dayMonth}.${month}.${year} ${hourse}:${minutes}`}`,
+        // time: {
+        //     dayMonth: data ? data.time.dayMonth : dayMonth,
+        //     month: data ? data.time.month : month,
+        //     year: data ? data.time.year : year,
+        //     hourse: data ? data.time.hourse : hourse,
+        //     minutes: data ? data.time.minutes : minutes
+        // },
         text: text ? text : data.text,
         completed: (data && data.completed) ? true : false
     }
@@ -45,17 +47,14 @@ function createNewTask(text, data = null) {
     <div class="list__content">
         <div class="check-completed ${toDo.completed ? 'check-completed_yes' : ''}" data-checkCompleted="true"></div>
         <div class="list__date">
-            <span>
-                ${toDo.time.dayMonth}.${toDo.time.month}.${toDo.time.year} 
-                ${toDo.time.hourse}:${toDo.time.minutes}
-            </span>
+            <span data-time>${toDo.time}</span>
         </div>
         <div class="list__text">
             <p data-text class="${(data && data.completed) ? 'text-completed' : ''}">${toDo.text}</p>
         </div>
     </div>
     `
-    listToDo.prepend(listContainer)
+    data ? listToDo.append(listContainer) : listToDo.prepend(listContainer)
 
     allToDos.push(toDo)
 
@@ -75,6 +74,7 @@ function initNewToDo($newTask) {
     const listener = event => {
         if (event.target.dataset.editing) {
             createInput($newTask)
+            onOffDraggable($newTask, false)
         } else if(event.target.dataset.close) {
             destroyElem($newTask)
             $newTask.removeEventListener('click', listener)
@@ -129,6 +129,7 @@ function checkCompleted(elem) {
 
 function createInput(elem) {
     const $listText = elem.querySelector('.list__text')
+    if (!$listText) return // здесь null если нажали редактировать, но вместо текста там input
     // Текст $listText который находится между <p></p>
     const listTextContent = $listText.querySelector('[data-text]').innerText
     
@@ -155,6 +156,7 @@ function createInput(elem) {
                 $input.replaceWith($listText)
                 setText(elem, inputText)
                 $input.removeEventListener('click', listener)
+                onOffDraggable(elem, true)
             }
         }
     }
@@ -175,6 +177,7 @@ function findObjInArrAllToDo(elem) {
 
 buttonSaveAllTasks.addEventListener('click', event => {
     if (allToDos.length > 0) {
+        saveAllToDoCycle()
         localStorage.setItem('toDos', JSON.stringify(allToDos))
     } else {
         localStorage.removeItem('toDos')
@@ -203,4 +206,33 @@ function loadLocalStorageAllToDos() {
             initNewToDo($newTask)
         });
     }
+}
+
+function onOffDraggable(elem, shift) {
+    elem.draggable = shift
+}
+
+function saveAllToDoCycle() {
+    allToDos = []
+    const children = [...listToDo.children]
+
+    children.forEach(elem => {
+        const text = elem.querySelector('[data-text]').innerText
+
+        let complite
+        if (elem.querySelector('[data-checkcompleted]').classList.contains('check-completed_yes')) {
+            complite = true
+        } else {
+            complite = false
+        }
+
+        const time = elem.querySelector('[data-time]').innerText
+
+        const toDo = {
+            time: time,
+            text: text,
+            completed: complite
+        }
+        allToDos.push(toDo)
+    })
 }
