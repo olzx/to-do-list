@@ -143,7 +143,7 @@ function createInput(elem) {
             <div class="input__main input__main_border-green">
                 <input type="text" data-inputUpdate value='${listTextContent}'>
             </div>
-            <input type="update" data-update="true" value="Обновить">
+            <input class="input_update" type="submit" data-update="true" value="Обновить">
         </div>
     `
     $listText.replaceWith($input)

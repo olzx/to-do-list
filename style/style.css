@@ -97,42 +97,42 @@ body {
     opacity: .8;
 }
 
-.input input[type='submit'] {
-    width: 20%;
+input {
     border: none; 
+    outline: none;
+    -webkit-appearance: none;
+    font-family: Roboto, sans-serif;
+    color: #EEEEEE;
+    transition: ease 0.2s;
+    cursor: pointer;
+}
+
+.input_add {
+    width: 20%;
     border-radius: 0 8px 8px 0;
     border: 2px solid #6C7984;
     border-left: none;
     background-color: #6C7984;
-    outline: none;
-    -webkit-appearance: none;
-    font-family: Roboto, sans-serif;
-    color: #EEEEEE;
     text-align: center;
     font-weight: 700;
-    transition: ease 0.2s;
-    cursor: pointer;
 }
 
-.input input[type='update'] {
+.input_add:hover {
+    background-color: #6c798480;
+}
+
+.input_update {
     width: 20%;
-    border: none; 
     border-radius: 0 8px 8px 0;
     border: 2px solid #28a288;
     border-left: none;
     background-color: #28a288;
-    outline: none;
-    -webkit-appearance: none;
-    font-family: Roboto, sans-serif;
-    color: #EEEEEE;
     text-align: center;
     font-weight: 700;
-    transition: ease 0.2s;
-    cursor: pointer;
 }
 
-.input input[type='submit']:hover {
-    background-color: #6c798480;
+.input_update:hover { 
+    background-color: #28a2887e;
 }
 
 .tools {
