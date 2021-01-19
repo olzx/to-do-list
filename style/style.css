@@ -55,6 +55,7 @@ body {
     border: 2px solid #6C7984;
     border-right: none;
     border-radius: 8px 0 0 8px;
+    animation: linear all 2s;
 }
 
 .input__main_border-green {
@@ -72,6 +73,10 @@ body {
     outline: none;
     -webkit-appearance: none;
     color: #EEEEEE;
+}
+
+.input__main_border-error {
+    border-color: rgba(224, 99, 73, 1);
 }
 
 .input__clear {
@@ -159,6 +164,74 @@ body {
 
 .tools__button:hover {
     background-color: #6C7984;
+}
+
+.tools__button_successful {
+    animation: button_successful 500ms 1 ease-in-out;
+}
+
+@keyframes button_successful {
+    0% {
+        background-color: rgb(88, 189, 75, 0.0);
+    }
+    12% {
+        background-color: rgba(88, 189, 75, 0.25);
+    }
+    24% {
+        background-color: rgba(88, 189, 75, 0.50);
+    }
+    36% {
+        background-color: rgba(88, 189, 75, 0.75);
+    }
+    47% {
+        background-color: rgba(88, 189, 75, 1);
+    }
+    59% {
+        background-color: rgba(88, 189, 75, 0.75);
+    }
+    70% {
+        background-color: rgba(88, 189, 75, 0.50);
+    }
+    82% {
+        background-color: rgba(88, 189, 75, 0.25);
+    }
+    100% {
+        background-color: rgba(88, 189, 75, 0.0);
+    }
+}
+
+.tools__button_error {
+    animation: button_error 500ms 1 ease-in-out;
+}
+
+@keyframes button_error {
+    0% {
+        background-color: rgb(189, 79, 75, 0.0);
+    }
+    12% {
+        background-color: rgba(189, 79, 75, 0.25);
+    }
+    24% {
+        background-color: rgba(189, 79, 75, 0.50);
+    }
+    36% {
+        background-color: rgba(189, 79, 75, 0.75);
+    }
+    47% {
+        background-color: rgb(189, 79, 75, 1);
+    }
+    59% {
+        background-color: rgba(189, 79, 75, 0.75);
+    }
+    70% {
+        background-color: rgba(189, 79, 75, 0.50);
+    }
+    82% {
+        background-color: rgba(189, 79, 75, 0.25);
+    }
+    100% {
+        background-color: rgba(189, 79, 75, 0.0);
+    }
 }
 
 .tools__item-icon {

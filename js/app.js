@@ -92,6 +92,9 @@ buttonAddTask.addEventListener('click', event => {
     if (inputText !== '') {
         const $newTask = createNewTask(inputText)
         initNewToDo($newTask)
+        buttonSetErrorBorder(buttonAddTask, false)
+    } else {
+        buttonSetErrorBorder(buttonAddTask, true)
     }
 })
 
@@ -152,11 +155,14 @@ function createInput(elem) {
             const inputText = isEmptyInput($inputTextUpdate)
 
             if (inputText !== '') {
+                buttonSetErrorBorder($inputTextUpdate, false)
                 pasteNewTextArrToDo($listText, inputText)
                 $input.replaceWith($listText)
                 setText(elem, inputText)
                 $input.removeEventListener('click', listener)
                 onOffDraggable(elem, true)
+            } else {
+                buttonSetErrorBorder($inputTextUpdate, true)
             }
         }
     }
@@ -182,6 +188,8 @@ buttonSaveAllTasks.addEventListener('click', event => {
     } else {
         localStorage.removeItem('toDos')
     }
+
+    buttonSuccessful(buttonSaveAllTasks, 500)
 })
 
 buttonRemoveAllTasks.addEventListener('click', event => {
@@ -191,9 +199,11 @@ buttonRemoveAllTasks.addEventListener('click', event => {
         if (isRemove) {
             listToDoChildren.forEach(elem => elem.remove())
             allToDos = [] // очищаем весь массив с toDos
+            buttonSuccessful(buttonRemoveAllTasks, 500)
         }
     } else {
-        console.log('Ошибка удаления: нет задач')
+        // console.log('Ошибка удаления: нет задач')
+        buttonError(buttonRemoveAllTasks, 500)
     }
 })
 
@@ -235,4 +245,26 @@ function saveAllToDoCycle() {
         }
         allToDos.push(toDo)
     })
+}
+
+function buttonSetErrorBorder(button, border) {
+    const parent = button.closest('.input__container')
+    if (parent) {
+        const inputMain = parent.querySelector('.input__main')
+        if (border) {
+            inputMain.classList.add('input__main_border-error')
+        } else {
+            inputMain.classList.remove('input__main_border-error')
+        }
+    }
+}
+
+function buttonSuccessful(button, delay) {
+    button.classList.add('tools__button_successful')
+    setTimeout(() => button.classList.remove('tools__button_successful'), delay)
+}
+
+function buttonError(button, delay) {
+    button.classList.add('tools__button_error')
+    setTimeout(() => button.classList.remove('tools__button_error'), delay)
 }
