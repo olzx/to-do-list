@@ -76,8 +76,10 @@ function initNewToDo($newTask) {
             createInput($newTask)
             onOffDraggable($newTask, false)
         } else if(event.target.dataset.close) {
-            destroyElem($newTask)
-            $newTask.removeEventListener('click', listener)
+            const result = destroyElem($newTask)
+            if (result) {
+                $newTask.removeEventListener('click', listener)
+            }
         } else if (event.target.dataset.checkcompleted) {
             checkCompleted($newTask)
         }
@@ -99,6 +101,8 @@ buttonAddTask.addEventListener('click', event => {
 })
 
 function destroyElem(elem) {
+    const input = elem.querySelector('.input')
+    if (input) return false   // если создан input - не удаять
     const elemText = elem.querySelector('[data-text]').innerText
     const obj = allToDos.find((item, index) => {
         if (item.text === elemText) {
@@ -108,6 +112,7 @@ function destroyElem(elem) {
     })
 
     elem.remove()
+    return true
 }
 
 function setText(elem, text) {
