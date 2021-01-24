@@ -79,6 +79,8 @@ function initNewToDo($newTask) {
             const result = destroyElem($newTask)
             if (result) {
                 $newTask.removeEventListener('click', listener)
+            } else {
+                alert('Ошибка удаления: завершите редактирование.')
             }
         } else if (event.target.dataset.checkcompleted) {
             checkCompleted($newTask)
@@ -102,7 +104,7 @@ buttonAddTask.addEventListener('click', event => {
 
 function destroyElem(elem) {
     const input = elem.querySelector('.input')
-    if (input) return false   // если создан input - не удаять
+    if (input) return false   // если создан input - не удалять
     const elemText = elem.querySelector('[data-text]').innerText
     const obj = allToDos.find((item, index) => {
         if (item.text === elemText) {
@@ -132,6 +134,7 @@ function checkCompleted(elem) {
         obj.completed = !obj.completed
     } else {
         // Выводим сообщение что нужно завершить редактирование
+        alert('Ошибка: завершите редактирование.')
     }
 }
 
@@ -188,8 +191,13 @@ function findObjInArrAllToDo(elem) {
 
 buttonSaveAllTasks.addEventListener('click', event => {
     if (allToDos.length > 0) {
-        saveAllToDoCycle()
-        localStorage.setItem('toDos', JSON.stringify(allToDos))
+        const {result, err} = saveAllToDoCycle()
+        if (result) {
+            localStorage.setItem('toDos', JSON.stringify(allToDos))
+        } else {
+            alert('Ошибка сохранения: завершите редактирование.')
+            return buttonError(buttonSaveAllTasks, 500)
+        }
     } else {
         localStorage.removeItem('toDos')
     }
@@ -207,7 +215,7 @@ buttonRemoveAllTasks.addEventListener('click', event => {
             buttonSuccessful(buttonRemoveAllTasks, 500)
         }
     } else {
-        // console.log('Ошибка удаления: нет задач')
+        // alert('Ошибка удаления: нет задач.')
         buttonError(buttonRemoveAllTasks, 500)
     }
 })
@@ -228,11 +236,17 @@ function onOffDraggable(elem, shift) {
 }
 
 function saveAllToDoCycle() {
-    allToDos = []
+    let errors = []
+
+    saveToDos = [] // сохраняем сюда toDo в цикле forEach до проверки на ошибки
     const children = [...listToDo.children]
 
     children.forEach(elem => {
-        const text = elem.querySelector('[data-text]').innerText
+        const dataText = elem.querySelector('[data-text]')
+        if (!dataText) {
+            return errors.push(elem)
+        }
+        const text = dataText.innerText
 
         let complite
         if (elem.querySelector('[data-checkcompleted]').classList.contains('check-completed_yes')) {
@@ -248,8 +262,17 @@ function saveAllToDoCycle() {
             text: text,
             completed: complite
         }
-        allToDos.push(toDo)
+        saveToDos.push(toDo)
     })
+
+    if (errors.length > 0) {
+        console.log(errors)
+        return {result: false, err: errors}
+    } else {
+        allToDos = []
+        allToDos = [...saveToDos]
+        return {result: true}
+    }
 }
 
 function buttonSetErrorBorder(button, border) {
