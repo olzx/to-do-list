@@ -8,15 +8,20 @@ body {
 }
 
 .main {
-    padding-top: 50px;
+    padding: 50px 0;
 }
 
 .center {
     margin: 0 auto;
-    width: 800px;
+    max-width: 800px;
     min-height: 300px;
     background-color: rgba(57,62,70, .8);
     border-radius: 10px;
+}
+@media (max-width: 800px) {
+    .center {
+        border-radius: 0px;
+    }
 }
 
 .container {
@@ -29,6 +34,11 @@ body {
     font-weight: 700;
     text-align: center;
     color: #EEEEEE;
+}
+@media (max-width: 610px) {
+    .title {
+        font-size: 25px;
+    }
 }
 
 .title span {
@@ -48,9 +58,12 @@ body {
     display: flex;
     width: 478px;
 }
+.list__input .input__container {
+    padding-left: 20px;
+}
 
 .input__main {
-    width: 80%;
+    width: 100%;
     position: relative;
     border: 2px solid #6C7984;
     border-right: none;
@@ -108,13 +121,13 @@ input {
 }
 
 .input_add {
-    width: 20%;
     border-radius: 0 8px 8px 0;
     border: 2px solid #6C7984;
     border-left: none;
     background-color: #6C7984;
     text-align: center;
     font-weight: 700;
+    padding: 0 10px;
 }
 
 .input_add:hover {
@@ -122,7 +135,7 @@ input {
 }
 
 .input_update {
-    width: 20%;
+    padding: 0 10px;
     border-radius: 0 8px 8px 0;
     border: 2px solid #28a288;
     border-left: none;
@@ -142,13 +155,19 @@ input {
 }
 
 .tools__container {
-    height: 40px;
     width: 100%;
     background-color: #6c798480;
     display: flex;
+
+}
+@media (max-width: 530px) {
+    .tools__container {
+        flex-direction: column;
+    }
 }
 
 .tools__button {
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -258,7 +277,7 @@ input {
 .list__input {
     justify-content: start;
     margin-bottom: 0;
-    margin-left: 20px;
+    max-width: 100%;
 }
 
 .list__container {
