@@ -90,7 +90,7 @@ function initNewToDo($newTask) {
     $newTask.addEventListener('click', listener)
 }
 
-buttonAddTask.addEventListener('click', event => {
+const addTask = () => {
     const inputText = isEmptyInput(inputTextTask)
 
     if (inputText !== '') {
@@ -99,6 +99,15 @@ buttonAddTask.addEventListener('click', event => {
         buttonSetErrorBorder(buttonAddTask, false)
     } else {
         buttonSetErrorBorder(buttonAddTask, true)
+    }
+}
+
+buttonAddTask.addEventListener('click', addTask)
+inputTextTask.addEventListener('keydown', e => {
+    if (e.type === 'keydown') {
+        if (e.key === 'Enter') {
+            addTask()
+        }
     }
 })
 
@@ -159,7 +168,7 @@ function createInput(elem) {
     const $inputTextUpdate = $input.querySelector('[data-inputupdate]')
 
     const listener = event => {
-        if (event.target.dataset.update) {
+        if (event.target.dataset.update || event.key === "Enter") {
             const inputText = isEmptyInput($inputTextUpdate)
 
             if (inputText !== '') {
@@ -176,6 +185,7 @@ function createInput(elem) {
     }
 
     $input.addEventListener('click', listener)
+    $input.addEventListener('keydown', listener)
 
     function pasteNewTextArrToDo(elem, text) {
         const obj = findObjInArrAllToDo(elem)
@@ -296,3 +306,26 @@ function buttonError(button, delay) {
     button.classList.add('tools__button_error')
     setTimeout(() => button.classList.remove('tools__button_error'), delay)
 }
+
+inputTextTask.addEventListener('input', () => {
+    const inputText = isEmptyInput(inputTextTask)
+
+    if (inputText !== '') {
+        buttonClearTextTask.style.visibility = 'visible'
+        buttonClearTextTask.style.opacity = 1
+    } else {
+        buttonClearTextTask.style.visibility = 'hidden'
+        buttonClearTextTask.style.opacity = 0
+    }
+})
+
+buttonClearTextTask.addEventListener('click', () => {
+    const inputText = isEmptyInput(inputTextTask)
+
+    if (inputText !== '') {
+        inputTextTask.value = ''
+
+        buttonClearTextTask.style.visibility = 'hidden'
+        buttonClearTextTask.style.opacity = 0
+    }
+})
